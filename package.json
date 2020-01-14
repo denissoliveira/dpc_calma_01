@@ -2,7 +2,7 @@
   "name": "dpc_calma_01",
   "version": "0.0.1",
   "description": "Consulta GRU",
-  "main": "index.html",
+  "main": "index.php",
   "scripts": {
     "test-release": "standard-version --dry-run",
     "release": "standard-version"
