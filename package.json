@@ -1,0 +1,23 @@
+{
+  "name": "dpc_calma_01",
+  "version": "0.0.1",
+  "description": "Consulta GRU",
+  "main": "index.html",
+  "scripts": {
+    "test-release": "standard-version --dry-run",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denissoliveira/dpc_calma_01.git"
+  },
+  "author": "Denis Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denissoliveira/dpc_calma_01/issues"
+  },
+  "homepage": "https://github.com/denissoliveira/dpc_calma_01#readme",
+  "devDependencies": {
+    "standard-version": "^7.0.1"
+  }
+}
