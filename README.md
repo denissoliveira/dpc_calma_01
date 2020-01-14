@@ -23,7 +23,7 @@ Você deve fazer a questão e criar pelo menos um teste com o Postman ou semelha
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+* Instalar o XAMPP, o ambiente de desenvolvimento PHP mais popular. Este pacote contém aplicativos de banco de dados Apache, PHP e MariaDB ou MySQL.
 
 ```
 Give examples
@@ -31,22 +31,33 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+#### Instalando o XAMPP
 
-Say what the step will be
+* Altere as permissões para o instalador
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+```sh
+chmod 755 xampp-linux-*-installer.run
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+* Execute o instalador
 
+```sh
+sudo ./xampp-linux-*-installer.run
+```
+
+O XAMPP agora está instalado no diretório /opt/lampp
+
+* Para iniciar o XAMPP, basta chamar este comando:
+
+```sh
+sudo /opt/lampp/lampp start
+```
+
+* Para parar o XAMPP, basta chamar este comando:
+
+```sh
+sudo /opt/lampp/lampp stop
+```
 ## Running the tests
 
 Explain how to run the automated tests for this system
