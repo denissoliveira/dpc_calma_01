@@ -8,9 +8,9 @@ A demanda deverá ser entregue em branch específica, e posteriormente na master
 
 Para configuração local, o acesso à base de dados é:
 
-URL: jdbc:oracle:thin:@172.19.0.87:1522:dsv
-Usuário: user_gru
-Senha: inpi123
+URL: jdbc:oracle:thin:@x.x.x.x:x:dsv
+Usuário: x
+Senha: x
 
 Demanda
 
