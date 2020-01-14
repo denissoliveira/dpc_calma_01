@@ -1,10 +1,11 @@
 {
   "name": "dpc_calma_01",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Consulta GRU",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-release": "standard-version --dry-run",
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
