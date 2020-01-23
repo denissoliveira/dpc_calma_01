@@ -1,4 +1,4 @@
-# dpc_calma_01
+# GRU
 
 webservice e API para acesso ao serviço que retorne GRU, as informações registradas para o documento.
 
@@ -25,6 +25,7 @@ Você deve fazer a questão e criar pelo menos um teste com o Postman ou semelha
 
 * Instalar PHP
 * Instalar Plugin Vscode (recomendado)
+* PostgresQL
 
 ### Installing
 
@@ -32,7 +33,10 @@ Você deve fazer a questão e criar pelo menos um teste com o Postman ou semelha
 
 ```sh
 sudo apt install php libapache2-mod-php
+
+sudo apt-get install php-pgsql
 ```
+
 ```sh
 sudo systemctl restart apache2
 ```
@@ -59,3 +63,19 @@ Explain how to run the automated tests for this system
 ## Authors
 
 * **[Denis Oliveira](https://github.com/denissoliveira)**
+
+## OBS (temp)
+
+```sql
+CREATE TABLE public.gru (
+	id bigserial NOT NULL,
+	numero varchar(256),
+	CONSTRAINT pk_id PRIMARY KEY (id)
+);
+
+INSERT INTO public.gru
+(numero)
+VALUES('1234');
+```
+http://localhost:3000/api/gru/read.php
+http://localhost:3000/api/gru/read_one.php?nu_gru=1234
