@@ -23,70 +23,34 @@ Você deve fazer a questão e criar pelo menos um teste com o Postman ou semelha
 
 ### Prerequisites
 
-* Instalar o XAMPP, o ambiente de desenvolvimento PHP mais popular. Este pacote contém aplicativos de banco de dados Apache, PHP e MariaDB ou MySQL.
-
-```
-Give examples
-```
+* Instalar PHP
+* Instalar Plugin Vscode (recomendado)
 
 ### Installing
 
-#### Instalando o XAMPP
-
-* Altere as permissões para o instalador
+#### Instalar o PHP no Linux
 
 ```sh
-chmod 755 xampp-linux-*-installer.run
+sudo apt install php libapache2-mod-php
 ```
-
-* Execute o instalador
-
 ```sh
-sudo ./xampp-linux-*-installer.run
+sudo systemctl restart apache2
 ```
+#### Plugin Visual Code
+* Precione (Ctrl+P) e cole `ext install brapifra.phpserve`;
+* Clique com o botão direito no arquivo.php para abrir as opções.
 
-O XAMPP agora está instalado no diretório /opt/lampp
-
-* Para iniciar o XAMPP, basta chamar este comando:
-
-```sh
-sudo /opt/lampp/lampp start
-```
-
-* Para parar o XAMPP, basta chamar este comando:
-
-```sh
-sudo /opt/lampp/lampp stop
-```
 ## Running the tests
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+* No vscode, clique com o botão direito e clique em server.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* PHP
 
 ## Versioning
 
