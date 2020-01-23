@@ -13,14 +13,14 @@ $db = $database->getConnection();
  
 $gru = new gru($db);
  
-$gru->id = isset($_GET['id']) ? $_GET['id'] : die();
+$gru->id = isset($_GET['nu_gru']) ? $_GET['nu_gru'] : die();
  
 $gru->readOne();
  
-if($gru->name!=null){
+if($gru->nu_gru!=null){
 
 	$gru_arr = array(
-        "NU_GRU" =>  $gru->NU_GRU
+        "nu_gru" =>  $gru->nu_gru
     );
  
     http_response_code(200);
