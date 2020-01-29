@@ -1,0 +1,70 @@
+private $conexao;
+
+	private function getConexao(){
+		$this->conexao = oci_connect('user_gru', 'inpi123', '172.19.0.87:1522/dsv');
+		if (!$this->conexao) {
+		    $e = oci_error();
+		    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		    print_r($e);die;
+		}
+		return $this->conexao;
+	}
+
+
+<?php 
+namespace inpi\DAO;
+
+class INPI {
+	private $conexao;
+
+	private function getConexao(){
+		$this->conexao = oci_connect('user_gru', 'inpi123', '172.19.0.87:1522/dsv');
+		if (!$this->conexao) {
+		    $e = oci_error();
+		    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+		    print_r($e);die;
+		}
+		return $this->conexao;
+	}
+	
+	public function recuperaGRU($gru){
+		$sql = "select * from tb_gru_recuperacao where nu_gru = :gru";
+		$stid = oci_parse($this->getConexao(), $sql);
+		oci_bind_by_name($stid, ':gru', $gru);
+		oci_execute($stid);
+		$gru = array();
+		while (($row = oci_fetch_object($stid)) != false) {
+		    array_push($gru, $row);		     
+		}
+		return $gru;
+	}
+
+}
+?>
+
+
+<?php 
+namespace inpi\Controller;
+use inpi\DAO;
+
+class Inicio {
+	private $dao;
+
+	public function inicio($request, $response, $args){
+		$result = "use uma GRU para pesquisar";
+		$code = 200;
+		if($args != "" && isset($args['gru']) && $args['gru'] != "" ){
+			$this->dao = new DAO\INPI();
+			$result = $this->dao->recuperaGRU($args['gru']);
+			if($result == "" || count($result) <= 0 ){
+				$result = "GRU nao encontrada";
+				$code = 404;
+			}
+		}
+		
+		$newResponse = $response->withJson($result, $code);
+		return $newResponse;
+	}
+}
+
+?>
