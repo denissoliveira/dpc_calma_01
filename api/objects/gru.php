@@ -15,7 +15,8 @@ class GRU
     function read() {
 
         $query = "SELECT
-                g.NU_GRU
+                g.id,
+                g.nu_gru
             FROM
                 " . $this->table_name . " g";
 
@@ -29,11 +30,11 @@ class GRU
     function readOne(){
  
         $query = "SELECT
-                    g.NU_GRU
+                    g.nu_gru
                 FROM
-                    " . $this->table_name . " p
+                    " . $this->table_name . " g
                 WHERE
-                    g.NU_GRU = ?";
+                    g.nu_gru = ?";
      
         $stmt = $this->conn->prepare( $query );
      
@@ -43,6 +44,6 @@ class GRU
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
      
-        $this->NU_GRU = $row['NU_GRU'];
+        $this->nu_gru = $row['nu_gru'];
     }
 }
