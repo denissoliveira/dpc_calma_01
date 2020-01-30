@@ -1,0 +1,174 @@
+extension=oci8_12c
+extension=pdo_oci
+
+<?php
+class Database{
+
+   /* private $server         = "localhost";
+    private $db_username    = "sys";
+    private $db_password    = "qwe";
+    private $service_name   = "ORCL";
+    private $sid            = "ORCL";
+    private $port           = 1521;
+    //private $mydb			="(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = $server)(PORT = $port))(CONNECT_DATA =(SERVICE_NAME = $service_name)(SID = $sid)))";
+	private $mydb			="(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA =(SERVICE_NAME = ORCL)(SID = ORCL)))";
+
+    private $opt = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_NUM,
+    ];*/
+ 
+    // private $host = "localhost";
+    // private $db_name = "grudb";
+    // private $username = "postgres";
+    // private $password = "postgres";
+    public $conn;
+ 
+    public function getConnection(){
+         $this->conn = null;
+         try{
+            $this-> conn = new PDO("oci:dbname=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA =(SERVICE_NAME = ORCL)(SID = ORCL)));charset=utf8", "system", "qwe",[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_NUM]);
+            //$this-> conn = new PDO("oci:dbname=".$mydb, $username, $password, $opt);
+            // $this->conn = new PDO("pgsql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            // $this->conn->exec("set names utf8");
+        }catch(PDOException $exception){
+            echo "Connection error: " . $exception->getMessage();
+        }
+         return $this->conn;
+    }
+}
+?>
+
+_______________________________________
+<?php read one
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
+ 
+include_once '../config/database.php';
+include_once '../objects/gru.php';
+ 
+$database = new Database();
+$db = $database->getConnection();
+ 
+$gru = new gru($db);
+ 
+$gru->NU_GRU = isset($_GET['NU_GRU']) ? $_GET['NU_GRU'] : die();
+ 
+$gru->readOne();
+ 
+ 
+if($gru->NU_GRU!=null){
+
+	$gru_arr = array(
+        "NU_GRU" =>  $gru->NU_GRU
+    );
+ 
+    http_response_code(200);
+
+    echo json_encode($gru_arr);
+}
+ 
+else{
+    http_response_code(404);
+ 
+    echo json_encode(array("message" => "GRU Não Existe."));
+}
+?>
+___________________________________
+<?php read
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+include_once '../config/database.php';
+include_once '../objects/gru.php';
+ 
+$database = new Database();
+$db = $database->getConnection();
+
+$gru = new Gru($db);
+ 
+$stmt = $gru->read();
+$num = $gru->countGRU();
+$r = $num->fetch(PDO::FETCH_ASSOC);
+	
+if((int)$r["COUNT(*)"]>0){
+ 
+    $grus_arr=array();
+    $grus_arr["GRUs"]=array();
+ 
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+ 
+        $gru_item=array(
+            "NU_GRU" => $NU_GRU,
+        );
+ 
+        array_push($grus_arr["GRUs"], $gru_item);
+    }
+ 
+    http_response_code(200);
+ 
+    echo json_encode($grus_arr);
+}else{
+ 
+    http_response_code(404);
+ 
+    echo json_encode(
+        array("message" => "GRU não encontrado.")
+    );
+}
+_________________________________
+<?php
+class GRU
+{
+
+    private $conn;
+    private $table_name = "TB_GRU_RECUPERACAO";
+
+    public $NU_GRU;
+
+    public function __construct($db)
+    {
+        $this->conn = $db;
+    }
+	
+	function countGRU() {
+		$query = "SELECT COUNT(*) FROM " . $this->table_name;
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt;
+	}	
+
+    function read() {
+
+        $query = "SELECT g.NU_GRU FROM " . $this->table_name . " g";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    function readOne(){
+ 
+        $query = "SELECT g.NU_GRU FROM " . $this->table_name . " g  WHERE g.NU_GRU = ?";
+     
+        $stmt = $this->conn->prepare( $query );
+     
+        $stmt->bindParam(1, $this->NU_GRU);
+     
+        $stmt->execute();
+     
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+     
+        $this->NU_GRU = $row['NU_GRU'];
+    }
+}
+____________________________________
